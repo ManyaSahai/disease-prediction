@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Disease Prediction</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 30px;
+        background-color: #f4f4f4;
+      }
+      .container {
+        background: white;
+        padding: 20px;
+        max-width: 700px;
+        margin: auto;
+        border-radius: 8px;
+      }
+      h2 {
+        text-align: center;
+      }
+      .result {
+        margin-top: 20px;
+      }
+      .flash {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Disease Prediction Model</h2>
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="flash">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %}
+
+      <form method="POST" enctype="multipart/form-data">
+        <label for="model">Select Model:</label>
+        <select name="model" required>
+          <option value="mnb">Multinomial Naive Bayes</option>
+          <option value="decision_tree">Decision Tree</option>
+          <option value="random_forest">Random Forest</option>
+          <option value="gradient_boost">Gradient Boost</option></select
+        ><br /><br />
+
+        <label for="testfile">Upload Test CSV File:</label>
+        <input type="file" name="testfile" /><br /><br />
+
+        <button type="submit" name="action" value="Train">Train Model</button>
+        <button type="submit" name="action" value="Predict">Predict</button>
+      </form>
+
+      {% if accuracy %}
+      <div class="result">
+        <h3>Model: {{ model }}</h3>
+        <p><strong>Test Accuracy:</strong> {{ accuracy }}</p>
+        <pre><strong>Classification Report:</strong><br>{{ report }}</pre>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>

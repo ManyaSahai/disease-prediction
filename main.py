@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 
 
 class DiseasePrediction:
-    # Initialize and Load the Config File
+    # Initialize and Load the Config Filepy
     def __init__(self, model_name=None):
         # Load Config File
         try:
@@ -76,7 +76,11 @@ class DiseasePrediction:
     # Features Correlation
     def _feature_correlation(self, data_frame=None, show_fig=False):
         # Get Feature Correlation
-        corr = data_frame.corr()
+        numeric_df = data_frame.select_dtypes(include=['number'])  # Keep only numeric columns
+        corr = numeric_df.corr()
+
+   
+
         sn.heatmap(corr, square=True, annot=False, cmap="YlGnBu")
         plt.title("Feature Correlation")
         plt.tight_layout()
